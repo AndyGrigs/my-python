@@ -1,58 +1,131 @@
+from random import randint
+
+
 class Point:
     def __init__(self, x, y):
+        self.__x = None
+        self.__y = None
         self.x = x
         self.y = y
 
     @property
     def x(self):
         return self.__x
-    
+
+    @x.setter
+    def x(self, x):
+        if (type(x) == int) or (type(x) == float):
+            self.__x = x
+
     @property
     def y(self):
         return self.__y
-    
-    @x.setter
-    def x(self, value):
-        if isinstance(value, (int, float)):
-            self.__x = value
-        else:
-            raise ValueError("Must be a NUMBER!!!")
-    
+
     @y.setter
-    def y(self, value):
-        if isinstance(value, (int, float)):
-            self.__y = value
-        else:
-            raise ValueError("Must be a NUMBER!!!")
-        
-    
+    def y(self, y):
+        if (type(y) == int) or (type(y) == float):
+            self.__y = y
+
+    def __str__(self):
+        return f"Point({self.x},{self.y})"
+
+
 class Vector:
     def __init__(self, coordinates: Point):
         self.coordinates = coordinates
 
+    def __setitem__(self, index, value):
+        if index == 0:
+            self.coordinates.x = value
+        if index == 1:
+            self.coordinates.y = value
+
     def __getitem__(self, index):
         if index == 0:
             return self.coordinates.x
-        elif index == 1:
+        if index == 1:
             return self.coordinates.y
-        else:
-            raise IndexError
 
-    def __setitem__(self, index, vaule):
-        if index == 0:
-            self.coordinates.x = vaule
-        elif index == 1:
-            self.coordinates.y = vaule
-        else:
-            raise IndexError 
-p = Point(1,15)
+    def __call__(self, value=None):
+        if value:
+            self.coordinates.x = self.coordinates.x * value
+            self.coordinates.y = self.coordinates.y * value
+        return self.coordinates.x, self.coordinates.y
 
-v = Vector(p)
+    def __add__(self, vector):
+        x = self.coordinates.x + vector.coordinates.x
+        y = self.coordinates.y + vector.coordinates.y
+        return Vector(Point(x, y))
 
-print(v[1])
+    def __sub__(self, vector):
+        x = self.coordinates.x - vector.coordinates.x
+        y = self.coordinates.y - vector.coordinates.y
+        return Vector(Point(x, y))
 
-v[0] = 100
-v[1] = 130
+    def __mul__(self, vector):
+        return (
+                self.coordinates.x * vector.coordinates.x
+                + self.coordinates.y * vector.coordinates.y
+        )
 
-print(f"After modification: x coordinate: {v[0]}")  # Should print: After modification: x coordinate: 10
-print(f"After modification: y coordinate: {v[1]}") 
+    def len(self):
+        return (self.coordinates.x ** 2 + self.coordinates.y ** 2) ** 0.5
+
+    def __str__(self):
+        return f"Vector({self.coordinates.x},{self.coordinates.y})"
+
+    def __eq__(self, vector):
+        return self.len() == vector.len()
+
+    def __ne__(self, vector):
+        return self.len() != vector.len()
+
+    def __lt__(self, vector):
+        return self.len() < vector.len()
+
+    def __gt__(self, vector):
+        return self.len() > vector.len()
+
+    def __le__(self, vector):
+        return self.len() <= vector.len()
+
+    def __ge__(self, vector):
+        return self.len() >= vector.len()
+
+
+class Iterable:
+    def __init__(self, max_vectors, max_points):
+        self.max_vectors = max_vectors
+        self.max_points = max_points
+        self.current_index = 0
+        self.vectors = [Vector(Point(randint(0, max_points), randint(0, max_points))) for _ in range(max_vectors)]
+        
+            
+
+    def __next__(self):
+        if self.current_index >= self.max_vectors:
+            raise StopIteration
+        result = self.vectors[self.current_index]
+        self.current_index += 1
+        return result
+        
+            
+            
+            
+        
+            
+
+
+class RandomVectors:
+    def __init__(self, max_vectors=10, max_points=50):
+        self.max_vectors = max_vectors
+        self.max_points = max_points
+
+    def __iter__(self):
+        return Iterable(self.max_vectors, self.max_points)
+
+vectors = RandomVectors(5, 10)
+
+for vector in vectors:
+    print(vector)
+        
