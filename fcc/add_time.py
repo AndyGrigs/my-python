@@ -1,4 +1,4 @@
-def add_time(start, duration, day=None):
+def add_time1111111111111111(start, duration, day=None):
     # Convert start time to 24-hour format
     start_hour, start_minutes = map(int, start[:-2].split(':'))
     am_pm = start[-2:]
@@ -40,7 +40,7 @@ def add_time(start, duration, day=None):
     # Handle days of the week
     if day:
         days_of_week = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
-        day = day.capitalize()  # Ensure the first letter is capitalized
+        day = day.capitalize()  
         if day not in days_of_week:
             raise ValueError(f"Day '{day}' is not valid. Expected one of {days_of_week}.")
         day_index = days_of_week.index(day)
@@ -56,7 +56,7 @@ def add_time(start, duration, day=None):
     return new_time
 
 
-def add_time11111111111(start, duration, day_of_week=None):
+def add_time(start, duration, day_of_week=None):
     # Define days of the week
     days_of_the_week_index = {'Monday': 0, 'Tuesday': 1, 'Wednesday': 2, 'Thursday': 3, 'Friday': 4, 'Saturday': 5, 'Sunday': 6}
     days_of_the_week_array = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
