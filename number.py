@@ -4,7 +4,6 @@ from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes, Callb
 import random
 import time
 
-TOKEN='8928206158:AAFCvIQdm3pEjkw8d7jmsq3a1sKJR1MAJKg'
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     keyboard = [
