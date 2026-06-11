@@ -46,7 +46,6 @@ async def level_chosen(update: Update, context: ContextTypes.DEFAULT_TYPE):
         f"У тебе є 45 секунд на злам. ЧАС ПІШОВ! ⏱"
     )
 
-
 async def handle_guess(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if not context.user_data.get("playing"):
         await update.message.reply_text(
